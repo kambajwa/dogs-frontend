@@ -1,0 +1,85 @@
+<div class="dogs-list-container">
+  @if (loading$ | async) {
+    <div class="loading-container">
+      <p-progressSpinner
+        strokeWidth="3"
+        animationDuration="1s"
+        [style]="{ width: '50px', height: '50px' }"
+      ></p-progressSpinner>
+      <p>Loading dogs...</p>
+    </div>
+  } @else if (error$ | async; as err) {
+    <p-message
+      severity="error"
+      [text]="err || ''"
+      [closable]="true"
+      (onClose)="dogsService.clearError()"
+    ></p-message>
+  } @else {
+    @if (dogs$ | async; as dogs) {
+
+      @if ((viewMode$ | async) === 'grid') {
+        <div class="dogs-grid">
+          @for (dog of dogs; track dog.id) {
+            <app-dog-card [dog]="dog" (remove)="confirmDelete($event)" (edit)="editDog($event)"></app-dog-card>
+          }
+
+          @if (dogs.length === 0) {
+            <div class="empty-state">
+              <i class="pi pi-search empty-icon"></i>
+              <h3>No dogs found</h3>
+              <p>Try adjusting your search filters.</p>
+            </div>
+          }
+        </div>
+      } @else {
+        <div class="dogs-list-view">
+          @for (dog of dogs; track dog.id) {
+            <app-dog-card class="dog-list-item" [dog]="dog" (remove)="confirmDelete($event)" (edit)="editDog($event)"></app-dog-card>
+          }
+
+          @if (dogs.length === 0) {
+            <div class="empty-state">
+              <i class="pi pi-search empty-icon"></i>
+              <h3>No dogs found</h3>
+              <p>Try adjusting your search filters.</p>
+            </div>
+          }
+        </div>
+      }
+
+    }
+
+    @if (dogsLength > 0) {
+      <div class="pagination-shell">
+        @if (size$ | async; as size) {
+          @if (total$ | async; as total) {
+            @if (page$ | async; as page) {
+
+              <div class="pagination-left">
+                <i class="pi pi-sliders-h"></i>
+                <span class="hint">Rows per page</span>
+              </div>
+
+              <p-paginator
+                class="dogs-paginator"
+                [rows]="size"
+                [totalRecords]="total"
+                [first]="(page - 1) * size"
+                [rowsPerPageOptions]="[5, 10, 20, 50]"
+                (onPageChange)="onPageChange($event)"
+                [showCurrentPageReport]="true"
+                currentPageReportTemplate="Showing {first}–{last} of {totalRecords} dogs"
+              ></p-paginator>
+
+            }
+          }
+        }
+      </div>
+
+    }
+  }
+</div>
+
+<p-toast></p-toast>
+<p-confirmDialog></p-confirmDialog>

@@ -1,0 +1,97 @@
+<p-card class="dog-card">
+  <ng-template pTemplate="header">
+    <div class="header">
+      <div class="header-left">
+        <div class="title-wrap">
+          <div class="title-row">
+            <div class="name">{{ dog.name }}</div>
+
+            @if (dog.currentStatus) {
+              <p-tag
+                class="status"
+                [value]="dog.currentStatus"
+                [severity]="statusSeverity(dog.currentStatus)"
+              ></p-tag>
+            }
+          </div>
+
+          <div class="subtitle">
+           <!-- <span class="muted">Breed</span>-->
+            <!--<span class="dot">•</span>-->
+            <span>{{ dog.breed }}</span>
+          </div>
+        </div>
+      </div>
+
+      @if (showActions) {
+        <div class="header-actions">
+          <button
+            pButton
+            type="button"
+            icon="pi pi-eye"
+            class="p-button-text p-button-sm"
+            (click)="showDetailsDialog.set(true)"
+            aria-label="View"
+          ></button>
+
+          <button
+            pButton
+            type="button"
+            icon="pi pi-pencil"
+            class="p-button-text p-button-sm"
+            (click)="edit.emit(dog)"
+            aria-label="Edit"
+          ></button>
+
+          <button
+            pButton
+            type="button"
+            icon="pi pi-trash"
+            class="p-button-text p-button-sm p-button-danger"
+            (click)="remove.emit(dog)"
+            aria-label="Delete"
+          ></button>
+        </div>
+      }
+    </div>
+  </ng-template>
+
+  <div class="body">
+    <div class="meta-grid">
+      <div class="meta">
+        <div class="label">Badge ID</div>
+        <div class="value mono">{{ dog.badgeId ?? '—' }}</div>
+      </div>
+
+      <div class="meta">
+        <div class="label">Gender</div>
+        <div class="value">{{ dog.gender ?? '—' }}</div>
+      </div>
+
+      @if (dog.birthDate !== undefined && dog.birthDate !== null) {
+        <div class="meta">
+          <div class="label">Dob</div>
+          <div class="value">{{ dog.birthDate | date }}</div>
+        </div>
+      }
+
+      @if (dog.supplier) {
+        <div class="meta">
+          <div class="label">Supplier</div>
+          <div class="value">{{ dog.supplier }}</div>
+        </div>
+      }
+    </div>
+  </div>
+</p-card>
+
+<p-dialog
+  [(visible)]="showDetailsDialog"
+  [modal]="true"
+  [closable]="true"
+  [style]="{ width: '95vw', maxWidth: '900px' }"
+  [dismissableMask]="true"
+  styleClass="dog-details-dialog"
+>
+  <app-dog-details [dog]="dog"></app-dog-details>
+</p-dialog>

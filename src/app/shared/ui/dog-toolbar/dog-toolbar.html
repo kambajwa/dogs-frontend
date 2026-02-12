@@ -1,0 +1,143 @@
+<p-toolbar class="dogs-toolbar">
+  <ng-template pTemplate="left">
+    <div class="left">
+      <div class="title-wrap logo-title-wrap">
+        <div class="title">Dogs</div>
+        <div class="subtitle">Manage your dogs with ease</div>
+      </div>
+
+      @if (showStatusCounts) {
+        <div class="status-counts">
+          <p-tag severity="success" value="In Service"></p-tag>
+          <span class="count">{{ statusCounts?.inService || 0 }}</span>
+
+          <p-tag severity="info" value="In Training"></p-tag>
+          <span class="count">{{ statusCounts?.inTraining || 0 }}</span>
+
+          <p-tag severity="warn" value="Retired"></p-tag>
+          <span class="count">{{ statusCounts?.retired || 0 }}</span>
+
+          <p-tag severity="danger" value="Left"></p-tag>
+          <span class="count">{{ statusCounts?.left || 0 }}</span>
+        </div>
+      }
+    </div>
+  </ng-template>
+
+  <!-- RIGHT -->
+  <ng-template pTemplate="right">
+    <div class="controls">
+      <!-- Search -->
+      <div class="search">
+            <span class="p-input-icon-left">
+              <i class="pi pi-search"></i>
+              <input
+                type="text"
+                pInputText
+                placeholder="Search name…"
+                [(ngModel)]="nameFilter"
+                (input)="onFilterChange()"
+              />
+            </span>
+
+        <input
+          type="text"
+          pInputText
+          placeholder="Breed…"
+          [(ngModel)]="breedFilter"
+          (input)="onFilterChange()"
+          class="compact"
+        />
+
+        <input
+          type="text"
+          pInputText
+          placeholder="Supplier…"
+          [(ngModel)]="supplierFilter"
+          (input)="onFilterChange()"
+          class="compact"
+        />
+      </div>
+
+      <!-- Sort + View -->
+      <div class="sort-view">
+        <div class="sort">
+          <i class="pi pi-sort-alt sort-icon" aria-hidden="true"></i>
+          <p-select
+            [options]="sortOptions"
+            [(ngModel)]="sortBy"
+            optionLabel="label"
+            optionValue="value"
+            placeholder="Sort by"
+            (onChange)="sortByChange.emit(sortBy)"
+            [style]="{ width: '180px' }"
+          ></p-select>
+        </div>
+
+        <div class="view-toggle" role="tablist" aria-label="View mode">
+          <button
+            pButton
+            type="button"
+            class="view-btn"
+            [outlined]="viewMode !== 'grid'"
+            icon="pi pi-th-large"
+            label="Grid"
+            (click)="setViewMode('grid')"
+          ></button>
+          <button
+            pButton
+            type="button"
+            class="view-btn"
+            [outlined]="viewMode !== 'list'"
+            icon="pi pi-bars"
+            label="List"
+            (click)="setViewMode('list')"
+          ></button>
+        </div>
+      </div>
+
+      <!-- Toggles + Actions -->
+      <div class="actions">
+        <div class="toggle-section">
+          <span class="toggle-label">Include deleted</span>
+          <p-toggleButton
+            [(ngModel)]="includeDeleted"
+            (onChange)="onIncludeDeletedChange()"
+            onLabel="Yes"
+            offLabel="No"
+            class="p-button-sm"
+          ></p-toggleButton>
+        </div>
+
+        @if (showLiveControls) {
+          <p-button
+            [label]="isLiveMode ? 'Stop Live' : 'Start Live'"
+            [icon]="isLiveMode ? 'pi pi-stop' : 'pi pi-play'"
+            [severity]="isLiveMode ? 'danger' : 'success'"
+            size="small"
+            (onClick)="onToggleLive.emit()"
+          ></p-button>
+        }
+
+        <button
+          pButton
+          type="button"
+          class="view-btn"
+          icon="pi pi-plus"
+          label="Add Dog"
+          (click)="onAddDog()"
+        ></button>
+
+        <button
+          pButton
+          type="button"
+          class="view-btn"
+          severity="secondary"
+          icon="pi pi-times"
+          label="Clear"
+          (click)="clearFilters()"
+        ></button>
+      </div>
+    </div>
+  </ng-template>
+</p-toolbar>

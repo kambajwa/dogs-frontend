@@ -1,0 +1,153 @@
+<div class="dog-details">
+  <p-card class="details-card">
+    <ng-template pTemplate="header">
+      <div class="details-header">
+        <div class="header-info">
+          <div class="name">{{ dog.name }}</div>
+          @if (dog.currentStatus) {
+            <p-tag
+              [value]="dog.currentStatus"
+              [severity]="statusSeverity(dog.currentStatus)"
+              class="status-tag"
+            ></p-tag>
+          }
+        </div>
+      </div>
+    </ng-template>
+
+    <div class="content-wrapper">
+      <!-- Basic Information -->
+      <p-fieldset legend="Basic Information" [toggleable]="false" [transitionOptions]="'400ms cubic-bezier(0.86, 0, 0.07, 1)'">
+        <div class="details-grid">
+          <div class="detail-item">
+            <div class="label">Name</div>
+            <div class="value">{{ dog.name }}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="label">Breed</div>
+            <div class="value">{{ dog.breed ?? '—' }}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="label">Badge ID</div>
+            <div class="value mono">{{ dog.badgeId ?? '—' }}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="label">Gender</div>
+            <div class="value">{{ dog.gender ?? '—' }}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="label">Supplier</div>
+            <div class="value">{{ dog.supplier ?? '—' }}</div>
+          </div>
+
+          <div class="detail-item">
+            <div class="label">Status</div>
+            <div class="value">
+              <p-tag
+                [value]="dog.currentStatus"
+                [severity]="statusSeverity(dog.currentStatus)"
+              ></p-tag>
+            </div>
+          </div>
+        </div>
+      </p-fieldset>
+
+      <p-divider></p-divider>
+
+      <!-- Dates Information -->
+      <p-fieldset legend="Dates" [toggleable]="true" [transitionOptions]="'400ms cubic-bezier(0.86, 0, 0.07, 1)'">
+        <div class="details-grid">
+          @if (dog.birthDate) {
+            <div class="detail-item">
+              <div class="label">Date of Birth</div>
+              <div class="value">{{ dog.birthDate | date: 'mediumDate' }}</div>
+            </div>
+          }
+
+          @if (dog.dateAcquired) {
+            <div class="detail-item">
+              <div class="label">Date Acquired</div>
+              <div class="value">{{ dog.dateAcquired | date: 'mediumDate' }}</div>
+            </div>
+          }
+
+          @if (dog.leavingDate) {
+            <div class="detail-item">
+              <div class="label">Leaving Date</div>
+              <div class="value">{{ dog.leavingDate | date: 'mediumDate' }}</div>
+            </div>
+          }
+
+          @if (dog.createdAt) {
+            <div class="detail-item">
+              <div class="label">Created</div>
+              <div class="value">{{ dog.createdAt | date: 'mediumDate' }}</div>
+            </div>
+          }
+
+          @if (dog.updatedAt) {
+            <div class="detail-item">
+              <div class="label">Last Updated</div>
+              <div class="value">{{ dog.updatedAt | date: 'mediumDate' }}</div>
+            </div>
+          }
+        </div>
+      </p-fieldset>
+
+      <p-divider></p-divider>
+
+      <!-- Status Information -->
+      @if ((dog.currentStatus === 'Left' || dog.currentStatus === 'Retired') && (dog.leavingReason || dog.leavingDate)) {
+        <p-fieldset legend="Leaving Information" [toggleable]="true" [transitionOptions]="'400ms cubic-bezier(0.86, 0, 0.07, 1)'">
+          <div class="details-grid">
+            @if (dog.leavingReason) {
+              <div class="detail-item">
+                <div class="label">Reason</div>
+                <div class="value">{{ dog.leavingReason }}</div>
+              </div>
+            }
+
+            @if (dog.leavingDate) {
+              <div class="detail-item">
+                <div class="label">Leaving Date</div>
+                <div class="value">{{ dog.leavingDate | date: 'mediumDate' }}</div>
+              </div>
+            }
+          </div>
+        </p-fieldset>
+
+        <p-divider></p-divider>
+      }
+
+      <!-- Additional Information -->
+      @if (dog.kennellingCharacteristic || dog.deleted) {
+        <p-fieldset legend="Additional Information" [toggleable]="true" [transitionOptions]="'400ms cubic-bezier(0.86, 0, 0.07, 1)'">
+          <div class="details-grid">
+            @if (dog.kennellingCharacteristic) {
+              <div class="detail-item full">
+                <div class="label">Kennelling Characteristic</div>
+                <div class="value">{{ dog.kennellingCharacteristic }}</div>
+              </div>
+            }
+
+            <div class="detail-item">
+              <div class="label">Status</div>
+              <div class="value">
+                @if (dog.deleted) {
+                  <p-tag value="Deleted" severity="danger"></p-tag>
+                } @else {
+                  <p-tag value="Active" severity="success"></p-tag>
+                }
+              </div>
+            </div>
+          </div>
+        </p-fieldset>
+      }
+    </div>
+  </p-card>
+</div>
+

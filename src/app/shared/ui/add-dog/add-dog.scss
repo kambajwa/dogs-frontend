@@ -1,0 +1,161 @@
+.dogs-list-container {
+  padding: 1rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  min-height: 100vh;
+}
+
+.page-head {
+  margin-bottom: 2rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 2px solid #e8e8e8;
+}
+
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin-bottom: 0.5rem;
+}
+
+.page-subtitle {
+  font-size: 1rem;
+  color: #999;
+  font-weight: 500;
+  margin: 0;
+}
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.full {
+  grid-column: 1 / -1;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.field label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: #333;
+  display: block;
+  margin-bottom: 0.25rem;
+}
+
+::ng-deep .field input,
+::ng-deep .field textarea,
+::ng-deep .field p-select,
+::ng-deep .field p-datePicker {
+  width: 100%;
+}
+
+::ng-deep .field p-datePicker .p-datepicker-trigger {
+  margin-left: 0.5rem;
+}
+
+.date-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.date-row p-datePicker {
+  flex: 1;
+}
+
+.date-row a {
+  font-size: 0.9rem;
+  white-space: nowrap;
+  padding: 0.5rem 0.75rem;
+  border-radius: 0.25rem;
+  transition: all 0.2s ease;
+}
+
+.date-row a:hover {
+  background-color: #f0f0f0;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 1rem;
+  background: #f9f9f9;
+  border-radius: 0.5rem;
+  border: 1px solid #e8e8e8;
+}
+
+.checkbox-label {
+  margin: 0;
+  font-weight: 500;
+  color: #333;
+  cursor: pointer;
+}
+
+::ng-deep p-message {
+  font-size: 0.9rem;
+  margin-top: 0.25rem;
+  display: block;
+}
+
+::ng-deep .p-message {
+  width: 100%;
+}
+
+.actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: 2rem;
+  padding-top: 1.5rem;
+  border-top: 1px solid #e8e8e8;
+  flex-wrap: wrap;
+}
+
+
+::ng-deep .p-divider {
+  margin: 2rem 0 !important;
+  border-color: #e8e8e8;
+}
+
+::ng-deep .p-card {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  border: 1px solid #e8e8e8;
+}
+
+::ng-deep .p-card-body {
+  padding: 2rem;
+}
+
+@media (max-width: 900px) {
+  .dogs-list-container {
+    padding: 1.5rem 1rem;
+  }
+
+  .page-head {
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+  }
+
+  .page-title {
+    font-size: 1.5rem;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .actions {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+
+}

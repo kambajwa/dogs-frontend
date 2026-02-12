@@ -1,0 +1,160 @@
+<div class="dogs-list-container">
+  <div class="page-head">
+    @if (isEditMode()) {
+      <div class="page-title">Edit dog</div>
+      <div class="page-subtitle">Update dog record</div>
+    } @else {
+      <div class="page-title">Add dog</div>
+      <div class="page-subtitle">Create a new dog record</div>
+    }
+  </div>
+
+  <p-card>
+    <form [formGroup]="form" (ngSubmit)="save()">
+      <div class="grid">
+
+        <div class="field full">
+          <label for="name">Name:</label>
+          <input id="name" pInputText formControlName="name"/>
+
+          @if (form.controls.name.touched && form.controls.name.invalid) {
+            <p-message severity="error" text="Name is required"></p-message>
+          }
+        </div>
+
+        <div class="field">
+          <label for="breed">Breed:</label>
+          <input id="breed" pInputText formControlName="breed"/>
+        </div>
+
+        <div class="field">
+          <label for="supplier">Supplier:</label>
+          <input id="supplier" pInputText formControlName="supplier"/>
+        </div>
+
+        <div class="field">
+          <label for="badgeId">Badge id:</label>
+          <input id="badgeId" pInputText formControlName="badgeId"/>
+
+          @if (form.controls.badgeId.touched && form.controls.badgeId.invalid) {
+            <p-message severity="error" text="Badge id is required"></p-message>
+          }
+        </div>
+
+        <div class="field">
+          <label>Gender:</label>
+          <p-select
+            inputId="gender"
+            [options]="genders"
+            optionLabel="label"
+            optionValue="value"
+            formControlName="gender">
+          </p-select>
+        </div>
+
+        <div class="field">
+          <label>Birth date:</label>
+          <p-datePicker
+            inputId="birthDate"
+            formControlName="birthDate"
+            dateFormat="yy-mm-dd"
+            [showIcon]="true">
+          </p-datePicker>
+        </div>
+
+        <div class="field">
+          <label>Date acquired:</label>
+
+          <div class="date-row">
+            <p-datePicker
+              inputId="dateAcquired"
+              formControlName="dateAcquired"
+              dateFormat="yy-mm-dd"
+              [showIcon]="true">
+            </p-datePicker>
+
+            <a class="p-link" (click)="setToday('dateAcquired')">Today</a>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Current status:</label>
+          <p-select
+            inputId="currentStatus"
+            [options]="statuses"
+            formControlName="currentStatus"
+            placeholder="---------">
+          </p-select>
+
+          @if (form.controls.currentStatus.touched && form.controls.currentStatus.invalid) {
+            <p-message severity="error" text="Current status is required"></p-message>
+          }
+        </div>
+
+        @if (showLeavingFields()) {
+          <div class="field">
+            <label>Leaving date:</label>
+
+            <div class="date-row">
+              <p-datePicker
+                inputId="leavingDate"
+                formControlName="leavingDate"
+                dateFormat="yy-mm-dd"
+                [showIcon]="true">
+              </p-datePicker>
+
+              <a class="p-link" (click)="setToday('leavingDate')">Today</a>
+            </div>
+          </div>
+
+          <div class="field">
+            <label>Leaving reason:</label>
+            <p-select
+              inputId="leavingReason"
+              [options]="leavingReasons"
+              optionLabel="label"
+              optionValue="value"
+              formControlName="leavingReason">
+            </p-select>
+          </div>
+        }
+
+        <div class="field full">
+          <label for="kennellingCharacteristic">Kennelling characteristic:</label>
+          <textarea
+            id="kennellingCharacteristic"
+            pInputTextarea
+            rows="6"
+            formControlName="kennellingCharacteristic"></textarea>
+        </div>
+
+        <div class="field full checkbox-row">
+          <p-checkbox inputId="deleted" [binary]="true" formControlName="deleted"></p-checkbox>
+          <label for="deleted" class="checkbox-label">Deleted</label>
+        </div>
+
+      </div>
+
+      <p-divider></p-divider>
+
+      @if (saveError()) {
+        <p-message severity="error" [text]="saveError()!"></p-message>
+      }
+
+      <div class="actions">
+        @if (isEditMode()) {
+          <p-button type="submit" label="UPDATE" [loading]="saving()"></p-button>
+        } @else {
+          <p-button type="submit" label="SAVE" [loading]="saving()"></p-button>
+          <p-button type="button" label="Save and add another" severity="secondary"
+                    (onClick)="saveAndAddAnother()" [disabled]="saving()"></p-button>
+        }
+        <p-button type="button" label="Cancel" severity="secondary"
+                  (onClick)="cancel()" [disabled]="saving()"></p-button>
+      </div>
+    </form>
+  </p-card>
+</div>
+
+<p-toast></p-toast>
+

@@ -1,0 +1,21 @@
+<div class="app-container">
+  <header>
+    <app-dog-toolbar
+      [showStatusCounts]="true"
+      [showLiveControls]="false"
+      [statusCounts]="statusCounts$ | async"
+      (filterChange)="onFilterChange($event)"
+      (includeDeletedChange)="onIncludeDeletedChange($event)"
+      (viewModeChange)="onViewModeChange($event)"
+      (sortByChange)="onSortByChange($event)"
+    ></app-dog-toolbar>
+  </header>
+  <main class="app-main">
+    <router-outlet
+      (activate)="onActivate($event)"
+    ></router-outlet>
+  </main>
+
+</div>
+
+<p-toast></p-toast>
